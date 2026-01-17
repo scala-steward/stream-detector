@@ -1,9 +1,9 @@
 package com.jambit.stream.detector
 
-import com.jambit.stream.detector.MatchTypes.{MatchEvent, Message}
-import org.apache.flink.api.common.eventtime.{SerializableTimestampAssigner, WatermarkStrategy}
+import com.jambit.stream.detector.MatchTypes.{ MatchEvent, Message }
+import org.apache.flink.api.common.eventtime.{ SerializableTimestampAssigner, WatermarkStrategy }
 import org.apache.flink.cep.pattern.Pattern
-import org.apache.flink.cep.{CEP, PatternStream}
+import org.apache.flink.cep.{ CEP, PatternStream }
 import org.apache.flink.configuration.Configuration
 import org.apache.flink.connector.kafka.source.KafkaSource
 import org.apache.flink.connector.kafka.source.enumerator.initializer.OffsetsInitializer
@@ -14,9 +14,9 @@ import java.time.Duration
 
 object MatchDetectorApp {
   def createMatchEventStream(
-                              env: StreamExecutionEnvironment,
-                              input: DataStream[Message]
-                            ): DataStream[MatchEvent] = {
+      env: StreamExecutionEnvironment,
+      input: DataStream[Message]
+  ): DataStream[MatchEvent] = {
     // 1) Define the pattern: start -> end
     val startEndPattern: Pattern[Message, Message] = Pattern
       .begin[Message]("start")
@@ -25,15 +25,15 @@ object MatchDetectorApp {
       .where((msg, _) => msg.messageType == "end")
 
     // 2) Key by userId and apply the pattern
-    val keyedStream = input.keyBy(_.userId)
+    val keyedStream                           = input.keyBy(_.userId)
     val patternStream: PatternStream[Message] = CEP.pattern(keyedStream, startEndPattern)
 
     // 3) Use .select to create a MatchEvent
     patternStream.select { patternMap =>
       val startMsg = patternMap.get("start").get(0)
-      val endMsg = patternMap.get("end").get(0)
+      val endMsg   = patternMap.get("end").get(0)
       new MatchEvent(
-        userId = startMsg.userId,
+        userId        = startMsg.userId,
         experienceWon = endMsg.messageValue - startMsg.messageValue
       )
     }
