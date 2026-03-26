@@ -36,7 +36,7 @@ lazy val library = new {
     val flinkKakfaConnector = "3.4.0-1.20"
     val log4j               = "2.24.3"
     val slf4j               = "2.0.16"
-    val scalaTest           = "3.2.19"
+    val scalaTest           = "3.2.20"
     val mockito             = "3.2.15.0"
   }
 
