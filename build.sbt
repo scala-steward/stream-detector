@@ -40,7 +40,7 @@ lazy val library = new {
     val mockito             = "3.2.15.0"
   }
 
-  val flinkClients = "org.apache.flink" % "flink-clients" % version.flink
+  val flinkClients       = "org.apache.flink" % "flink-clients" % version.flink
   val flinkStreamingJava =
     "org.apache.flink" % "flink-streaming-java" % version.flink classifier "tests"
   val flinkKafka = "org.apache.flink" % "flink-connector-kafka" % version.flinkKakfaConnector
