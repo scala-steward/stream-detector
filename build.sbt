@@ -37,7 +37,7 @@ lazy val library = new {
     val log4j               = "2.24.3"
     val slf4j               = "2.0.16"
     val scalaTest           = "3.2.19"
-    val mockito             = "3.2.15.0"
+    val mockito             = "3.2.18.0"
   }
 
   val flinkClients = "org.apache.flink" % "flink-clients" % version.flink
@@ -57,6 +57,6 @@ lazy val library = new {
       "org.apache.logging.log4j",
       "log4j-slf4j-impl"
     )
-  val scalaTest = "org.scalatest"     %% "scalatest"   % version.scalaTest % "test"
-  val mockito   = "org.scalatestplus" %% "mockito-4-6" % version.mockito   % "test"
+  val scalaTest = "org.scalatest"     %% "scalatest"    % version.scalaTest % "test"
+  val mockito   = "org.scalatestplus" %% "mockito-4-11" % version.mockito   % "test"
 }
